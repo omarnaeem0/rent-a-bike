@@ -24,8 +24,8 @@ export const SignUp = (props) => {
       <Avatar className='marginBottom' />
       <Text className='h5 marginBottom'>Sign Up</Text>
       <Input className='marginTopRemove' label='Email' value={email} onChange={e => setEmail(e.target.value)} />
-      <Input className='marginTopRemove' label='Password' value={password} onChange={e => setPassword(e.target.value)} />
-      <Input className='marginTopRemove' label='Confirm Password' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+      <Input className='marginTopRemove' label='Password' type='password' value={password} onChange={e => setPassword(e.target.value)} />
+      <Input className='marginTopRemove' label='Confirm Password' type='password' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
       <div className='row marginBottom subtitle1'><Text className='marginRight'>Manager </Text><Checkbox defaultChecked={isManager} onChange={() => setIsManager(!isManager)} /></div>
       {error && <Text className='caption error marginBottom'>{error.message}</Text>}
       <Button className='marginBottom' title='Sign Up' disabled={email === '' && password === '' && confirmPassword === '' && password !== confirmPassword} onClick={() => signup(email, password, isManager ? 'manager' : 'user')} />

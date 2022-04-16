@@ -22,7 +22,7 @@ export const SignIn = (props) => {
       <Avatar className='marginBottom' />
       <Text className='h5 marginBottom'>Sign In</Text>
       <Input className='marginTopRemove' label='Email' value={email} onChange={e => setEmail(e.target.value)} />
-      <Input className='marginTopRemove' label='Password' value={password} onChange={e => setPassword(e.target.value)} />
+      <Input className='marginTopRemove' label='Password' type='password' value={password} onChange={e => setPassword(e.target.value)} />
       {error && <Text className='caption error marginBottom'>{error.message}</Text>}
       <Button className='marginBottom' title='Sign In' onClick={() => signin(email, password)} />
       <Text>Don't have an account? <Link to='/signup'>Sign Up</Link> </Text>
