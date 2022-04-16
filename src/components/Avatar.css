@@ -1,0 +1,21 @@
+.IconButtonContainer {
+  border-radius: 20px;
+  padding: 6px;
+  border-color: transparent;
+  background-color: white;
+}
+.IconButtonContainer:hover {     
+  background-color:#e8e8e8;    
+}
+.IconButtonContainer:active {     
+  background-color:#bbbbbb;    
+}
+.IconButtonContainer:disabled {     
+  color:rgba(0, 0, 0, 0.26);  
+  background-color: rgba(0, 0, 0, 0.12);  
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}

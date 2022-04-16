@@ -1,0 +1,40 @@
+.Input {
+  font: inherit;
+  border-color: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  flex: 1 1;
+  height: 1.1876em;
+  display: block;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  letter-spacing: inherit;
+  animation-duration: 10ms;
+  -webkit-tap-highlight-color: transparent;
+  padding: 18.5px 14px;
+  padding-top: 10.5px;
+  padding-bottom: 10.5px;
+}
+
+.Input:active {
+  border-color: red;
+}
+
+.InputContainer {
+  position: relative;
+  display: flex;
+  margin: 24px;
+}
+
+.label {
+  position:absolute;
+  top: -8px;
+  left: 12px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: white;
+}
+
+.label:focus {
+  color: #1976d2;
+}

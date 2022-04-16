@@ -1,0 +1,35 @@
+.DeleteLabel {
+  margin: 24px;
+  margin-bottom: 0px;
+  margin-top: 12px;
+  align-self:flex-start;
+}
+
+.TopInput {
+  margin-bottom: 0px;
+  margin-top: 12px;
+}
+
+.BottomInput {
+}
+
+.ButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.NoButton {
+  margin: 24px;
+}
+.YesButton {
+  margin: 24px;
+  margin-left: 0px;
+}
+
+.DeleteTodoContainer {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,21 @@
+.SignUpContainer {
+  flex: 1;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  overflow-x: scroll;
+  max-height: max-content;
+}
+
+.SignUpInternalContainer {
+  overflow-x: scroll;
+  justify-content: center;
+  align-items: center;
+}
+
+.marginBottom {
+  margin-bottom: 20px;
+}
+
+.marginTopRemove {
+  margin-top: 0px;
+}
