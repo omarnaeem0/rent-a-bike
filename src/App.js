@@ -1,45 +1,27 @@
 import './App.css';
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Manager, SignIn, SignUp, User } from './pages';
-import { useEffect, useState } from 'react';
 import { useAuth } from './context/AuthContext';
 
 function App() {
-  // const [user, setUser] = useState({
-  //   permission: 'manager',
-  //   signedIn: false
-  // })
-  // useEffect(() => {
-  //   readUser();
-  // }, [])
-  // const saveUser = (user) => {
-  //   setUser(user);
-  //   localStorage.setItem('user', JSON.stringify(user));
-  // }
-  // const readUser = () => {
-  //   const user = localStorage.getItem('user');
-  //   user && setUser(JSON.parse(user));
-  // }
-  const { currentUser } = useAuth();
-  const userType = 'manager';
+  const { currentUser, permission } = useAuth();
   return (
     <div className='App'>
       <Routes>
-        <Route path="/" element={<Navigate to={currentUser ? userType : 'signin'} />} />
-        <Route path="signin" element={<CheckSignedInRoute userType={userType}><SignIn /></CheckSignedInRoute>} />
-        <Route path="signup" element={<CheckSignedInRoute userType={userType}><SignUp /></CheckSignedInRoute>} />
-        <Route path="manager" element={<ProtectedRoute><Manager/></ProtectedRoute>} />
-        <Route path="user" element={<ProtectedRoute><User /></ProtectedRoute>} />
+        <Route path="/" element={<Navigate to={currentUser ? 'home' : 'signin'} />} />
+        <Route path="signin" element={<CheckSignedInRoute><SignIn /></CheckSignedInRoute>} />
+        <Route path="signup" element={<CheckSignedInRoute><SignUp /></CheckSignedInRoute>} />
+        <Route path="home" element={<ProtectedRoute>{permission === 'manager' ? <Manager /> : <User />}</ProtectedRoute>} />
       </Routes>
     </div>
   );
 }
 
 function CheckSignedInRoute(props) {
-  const { children, userType } = props;
+  const { children } = props;
   const { currentUser } = useAuth();
   if (currentUser) {
-    return <Navigate to={'/' + userType} />
+    return <Navigate to={'/home'} />
   }
   return children;
 }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../api/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { addUserPermission, getUserPermission } from "../api/permission";
 
 const AuthContext = React.createContext();
 
@@ -8,17 +9,23 @@ export function useAuth() {
   return useContext(AuthContext)
 }
 
-export function AuthProvider({children}) {
+let perm = '';
+const getPerm = () => perm;
+const setPerm = p => { perm = p };
+
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [permission, setPermission] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  async function signup(email, password) {
+  async function signup(email, password, permission) {
     setError(false);
     setLoading(true);
     try {
+      setPermission(permission);
+      setPerm(permission);
       const response = await createUserWithEmailAndPassword(auth, email, password);
-      setCurrentUser(response.user);
-      setLoading(false);
+      await addUserPermission(response.user.uid, permission);
     } catch (e) {
       console.error(e);
       setError(e);
@@ -29,9 +36,7 @@ export function AuthProvider({children}) {
     setError(false);
     setLoading(true);
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      setCurrentUser(response.user);
-      setLoading(false);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (e) {
       console.error(e);
       setError(e);
@@ -42,8 +47,7 @@ export function AuthProvider({children}) {
     setError(false);
     setLoading(true);
     try {
-      const response = await signOut(auth);
-      setCurrentUser(undefined);
+      await signOut(auth);
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -52,10 +56,11 @@ export function AuthProvider({children}) {
     }
   }
   useEffect(() => {
-    setLoading(true)
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if(user){
-        setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async user => {
+      setCurrentUser(user);
+      if (user && !getPerm()) {
+        const getPermission = await getUserPermission(user.uid);
+        setPermission(getPermission.permission);
       }
       setLoading(false)
     })
@@ -67,7 +72,8 @@ export function AuthProvider({children}) {
     signin,
     signout,
     error,
-    loading
+    loading,
+    permission
   }
   return (
     <AuthContext.Provider value={value}>
