@@ -11,3 +11,4 @@ export * from './EditTodoCard';
 export * from './DeleteTodoCard';
 export * from './Avatar';
 export * from './Loader';
+export * from './Checkbox';
