@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Button, AuthContainer, Input, Text, Loader } from "../components";
+import { Avatar, Loader } from "../components";
+import { Container, Grid, Paper, Typography, TextField, Button } from '@mui/material';
 import { useAuth } from "../context/AuthContext";
 import './signin.css';
 
@@ -18,14 +19,32 @@ export const SignIn = (props) => {
     return <Loader />
   }
   return (
-    <AuthContainer className='SignInContainer' internalClassName='SignInInternalContainer'>
-      <Avatar className='marginBottom' />
-      <Text className='h5 marginBottom'>Sign In</Text>
-      <Input className='marginTopRemove' label='Email' value={email} onChange={e => setEmail(e.target.value)} />
-      <Input className='marginTopRemove' label='Password' type='password' value={password} onChange={e => setPassword(e.target.value)} />
-      {error && <Text className='caption error marginBottom'>{error.message}</Text>}
-      <Button className='marginBottom' title='Sign In' onClick={() => signin(email, password)} />
-      <Text>Don't have an account? <Link to='/signup'>Sign Up</Link> </Text>
-    </AuthContainer>
+    <Container maxWidth="xs" >
+      <Paper className="SignInContainer">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Avatar />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h5">Sign In</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField size="small" id="outlined-basic" label="Email" variant="outlined" value={email} onChange={e => setEmail(e.target.value)} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+          </Grid>
+          {error && <Grid item xs={12}>
+            <Typography variant="caption">{error.message}</Typography>
+          </Grid>}
+          <Grid item xs={12}>
+            <Button variant="contained" onClick={() => signin(email, password)} >Sign In</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>Don't have an account? <Link to='/signup'>Sign Up</Link> </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
   )
 }
