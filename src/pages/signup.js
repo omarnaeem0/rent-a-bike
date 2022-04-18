@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Loader } from "../components";
+import { Avatar, Loader, TextField } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { Container, Grid, Paper, Typography, TextField, Checkbox, FormControlLabel, Button } from '@mui/material';
+import { Container, Grid, Paper, Typography, Checkbox, FormControlLabel, Button } from '@mui/material';
 import './signup.css';
 
 export const SignUp = (props) => {
@@ -20,6 +20,7 @@ export const SignUp = (props) => {
   if (loading) {
     return <Loader />
   }
+  const buttonDisabler = email === '' && password === '' && confirmPassword === '' && password !== confirmPassword;
   return (
     <Container maxWidth="xs" >
       <Paper className="SignUpContainer">
@@ -31,13 +32,13 @@ export const SignUp = (props) => {
             <Typography variant="h5">Sign Up</Typography>
           </Grid>
           <Grid item xs={12}>
-            <TextField size="small" id="outlined-basic" label="Email" variant="outlined" value={email} onChange={e => setEmail(e.target.value)} />
+            <TextField label="Email" value={email} onChange={e => setEmail(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <TextField size="small" id="outlined-basic" label="Confirm Password" variant="outlined" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+            <TextField label="Confirm Password" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel
@@ -54,7 +55,7 @@ export const SignUp = (props) => {
             <Typography variant="caption">{error.message}</Typography>
           </Grid>}
           <Grid item xs={12}>
-            <Button variant="contained" disabled={email === '' && password === '' && confirmPassword === '' && password !== confirmPassword} onClick={() => signup(email, password, isManager ? 'manager' : 'user')} >Sign Up</Button>
+            <Button variant="contained" disabled={buttonDisabler} onClick={() => signup(email, password, isManager ? 'manager' : 'user')} >Sign Up</Button>
           </Grid>
           <Grid item xs={12}>
             <Typography>Already have an account? <Link to='/signin'>Sign In</Link> </Typography>

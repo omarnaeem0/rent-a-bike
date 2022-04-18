@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Loader } from "../components";
-import { Container, Grid, Paper, Typography, TextField, Button } from '@mui/material';
+import { Avatar, Loader, TextField } from "../components";
+import { Container, Grid, Paper, Typography, Button } from '@mui/material';
 import { useAuth } from "../context/AuthContext";
 import './signin.css';
 
@@ -29,10 +29,10 @@ export const SignIn = (props) => {
             <Typography variant="h5">Sign In</Typography>
           </Grid>
           <Grid item xs={12}>
-            <TextField size="small" id="outlined-basic" label="Email" variant="outlined" value={email} onChange={e => setEmail(e.target.value)} />
+            <TextField label="Email" value={email} onChange={e => setEmail(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <TextField size="small" id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
           </Grid>
           {error && <Grid item xs={12}>
             <Typography variant="caption">{error.message}</Typography>

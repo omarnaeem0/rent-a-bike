@@ -1,17 +1,19 @@
 import './App.css';
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Manager, SignIn, SignUp, User } from './pages';
+import { Home, SignIn, SignUp } from './pages';
 import { useAuth } from './context/AuthContext';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
-  const { currentUser, permission } = useAuth();
+  const { currentUser } = useAuth();
   return (
     <div className='App'>
+      <CssBaseline />
       <Routes>
         <Route path="/" element={<Navigate to={currentUser ? 'home' : 'signin'} />} />
         <Route path="signin" element={<CheckSignedInRoute><SignIn /></CheckSignedInRoute>} />
         <Route path="signup" element={<CheckSignedInRoute><SignUp /></CheckSignedInRoute>} />
-        <Route path="home" element={<ProtectedRoute>{permission === 'manager' ? <Manager /> : <User />}</ProtectedRoute>} />
+        <Route path="home/*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
       </Routes>
     </div>
   );
