@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "../components";
-import { useAuth } from "../context/AuthContext";
+import { Loader } from "../../components";
+import { useAuth } from "../../context/AuthContext";
 import './home.css';
 import { Routes, Route, Navigate } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -20,6 +20,7 @@ import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import HistoryIcon from '@mui/icons-material/History';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import { AccountManager, BikeHistory, BikeManager, BikeReservation, UserHistory } from "./pages";
 const drawerWidth = 240;
 
 export const Home = (props) => {
@@ -40,26 +41,31 @@ export const Home = (props) => {
         features = [{
           text: 'Account Manager',
           route: 'account-manager',
-          icon: <SupervisorAccountIcon />
+          icon: <SupervisorAccountIcon />,
+          element: <AccountManager/>
         }, {
           text: 'Bike Manager',
           route: 'bike-manager',
-          icon: <TwoWheelerIcon />
+          icon: <TwoWheelerIcon />,
+          element: <BikeManager/>
         }, {
           text: 'Bike History',
           route: 'bike-history',
-          icon: <HistoryIcon />
+          icon: <HistoryIcon />,
+          element: <BikeHistory/>
         }, {
           text: 'User History',
           route: 'user-history',
-          icon: <ManageSearchIcon />
+          icon: <ManageSearchIcon />,
+          element: <UserHistory/>
         }]
         break;
       default:
         features = [{
           text: 'Bike Reservation',
           route: 'bike-reservation',
-          icon: <HistoryEduIcon />
+          icon: <HistoryEduIcon />,
+          element: <BikeReservation/>
         }]
         break;
     }
@@ -105,8 +111,8 @@ export const Home = (props) => {
         <Routes>
           <Route path={'/'} element={<Navigate to={features[0].route} />} />
           {
-            features.map((feature) => (
-              <Route key={feature.route} path={feature.route} element={<div>{feature.text}</div>} />
+            features.map(({ route, element }) => (
+              <Route key={route} path={route} element={element} />
             ))
           }
         </Routes>

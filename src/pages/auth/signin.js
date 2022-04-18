@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Loader, TextField } from "../components";
+import { Avatar, Loader, TextField } from "../../components";
 import { Container, Grid, Paper, Typography, Button } from '@mui/material';
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import './signin.css';
 
 export const SignIn = (props) => {

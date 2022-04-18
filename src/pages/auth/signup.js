@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Loader, TextField } from "../components";
-import { useAuth } from "../context/AuthContext";
+import { Avatar, Loader, TextField } from "../../components";
+import { useAuth } from "../../context/AuthContext";
 import { Container, Grid, Paper, Typography, Checkbox, FormControlLabel, Button } from '@mui/material';
 import './signup.css';
 
