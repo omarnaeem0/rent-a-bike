@@ -25,7 +25,7 @@ const drawerWidth = 240;
 
 export const Home = (props) => {
   let navigate = useNavigate();
-  const { currentUser, signout, loading, permission } = useAuth();
+  const { currentUser, signout, loading, role } = useAuth();
   useEffect(() => {
     if (!currentUser) {
       navigate('/signin');
@@ -36,18 +36,18 @@ export const Home = (props) => {
   }
   const getFeatures = () => {
     let features = [];
-    switch (permission) {
+    switch (role) {
       case 'manager':
-        features = [{
-          text: 'Account Manager',
-          route: 'account-manager',
-          icon: <SupervisorAccountIcon />,
-          element: <AccountManager/>
-        }, {
+        features = [ {
           text: 'Bike Manager',
           route: 'bike-manager',
           icon: <TwoWheelerIcon />,
           element: <BikeManager/>
+        },{
+          text: 'Account Manager',
+          route: 'account-manager',
+          icon: <SupervisorAccountIcon />,
+          element: <AccountManager/>
         }, {
           text: 'Bike History',
           route: 'bike-history',
@@ -71,7 +71,7 @@ export const Home = (props) => {
     }
     return features;
   }
-  const features = getFeatures(permission);
+  const features = getFeatures(role);
   return (
     <Box sx={{ display: 'flex' }} className='appBarMargin'>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>

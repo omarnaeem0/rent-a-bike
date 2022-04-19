@@ -5,7 +5,8 @@ import AddIcon from '@mui/icons-material/AddBoxOutlined';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import {
-  IconButton, Toolbar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, FormHelperText
+  IconButton, Toolbar, Button, Dialog, DialogActions, Typography,
+  DialogContent, DialogContentText, DialogTitle, Grid, FormHelperText
 } from '@mui/material';
 
 export const BikeManager = () => {
@@ -51,6 +52,9 @@ export const BikeManager = () => {
   }, []);
   const toolbar = (
     <Toolbar>
+      <Typography variant="h7" component="div" >
+        Bike Manager
+      </Typography>
       <div style={{ flex: 1 }} />
       <IconButton color="primary" component="span" onClick={() => setAddEditDialog(true)}>
         <AddIcon />
@@ -151,7 +155,7 @@ const BikeDeleteDialog = ({ open, setOpen, onDelete }) => {
     setOpen(false);
   };
   const handleYes = async () => {
-    try{
+    try {
       await onDelete(open.id);
       handleClose();
     } catch (e) {
