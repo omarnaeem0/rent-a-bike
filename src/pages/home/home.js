@@ -73,7 +73,7 @@ export const Home = (props) => {
   }
   const features = getFeatures(permission);
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} className='appBarMargin'>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar >
           <Typography variant="h6" component="div" >

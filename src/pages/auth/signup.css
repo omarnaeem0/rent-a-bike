@@ -5,3 +5,9 @@
   overflow-x: scroll;
   max-height: max-content;
 }
+
+.centerAlign {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}

@@ -19,32 +19,34 @@ export const SignIn = (props) => {
     return <Loader />
   }
   return (
-    <Container maxWidth="xs" >
-      <Paper className="SignInContainer">
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Avatar />
+    <div className="centerAlign">
+      <Container maxWidth="xs" >
+        <Paper className="SignInContainer">
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Avatar />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">Sign In</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Email" value={email} onChange={e => setEmail(e.target.value)} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            </Grid>
+            {error && <Grid item xs={12}>
+              <Typography variant="caption">{error.message}</Typography>
+            </Grid>}
+            <Grid item xs={12}>
+              <Button variant="contained" onClick={() => signin(email, password)} >Sign In</Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Don't have an account? <Link to='/signup'>Sign Up</Link> </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h5">Sign In</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="Email" value={email} onChange={e => setEmail(e.target.value)} />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-          </Grid>
-          {error && <Grid item xs={12}>
-            <Typography variant="caption">{error.message}</Typography>
-          </Grid>}
-          <Grid item xs={12}>
-            <Button variant="contained" onClick={() => signin(email, password)} >Sign In</Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>Don't have an account? <Link to='/signup'>Sign Up</Link> </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Container>
+        </Paper>
+      </Container>
+    </div>
   )
 }

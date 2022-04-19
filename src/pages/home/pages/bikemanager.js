@@ -1,7 +1,8 @@
 import React from "react";
+import { Table } from "../../../components";
 
 export const BikeManager = (props) => {
   return (
-    <div>AccountManager</div>
+    <Table/>
   )
 }
