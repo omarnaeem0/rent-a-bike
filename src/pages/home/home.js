@@ -97,7 +97,7 @@ export const Home = (props) => {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {features.map(({ text, icon, route }) => (
-              <ListItem button onClick={() => navigate(route)}>
+              <ListItem key={text} button onClick={() => navigate(route)}>
                 <ListItemIcon>
                   {icon}
                 </ListItemIcon>
