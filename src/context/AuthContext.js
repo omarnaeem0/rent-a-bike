@@ -60,7 +60,6 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       if (user && !getPerm()) {
         const getRole = await getAccount(user.uid);
-        console.log('================', getRole)
         setRole(getRole.role);
       }
       setLoading(false)

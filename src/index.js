@@ -5,14 +5,18 @@ import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/AuthContext';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </LocalizationProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
