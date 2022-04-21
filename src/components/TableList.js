@@ -34,7 +34,7 @@ export function TableList({ columns, rows, title, onSelectRecord }) {
             {rows
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code} onClick={() => onSelectRecord(row)}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => onSelectRecord(row)}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (

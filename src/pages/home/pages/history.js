@@ -1,4 +1,4 @@
-import { Grid, FormControl, InputLabel, Select, MenuItem, Card, CardContent, Accordion, AccordionSummary, AccordionDetails, Button } from "@mui/material";
+import { Grid, FormControl, InputLabel, Select, MenuItem, Card, CardContent, Button } from "@mui/material";
 import React, { useState } from "react";
 import { getAccounts } from "../../../api/accounts";
 import { getBikes } from "../../../api/bikes";
@@ -8,6 +8,9 @@ export const History = (props) => {
   const [searchType, setSearchType] = useState('');
   const onChangeSearchType = (e) => {
     setSearchType(e.target.value);
+    onClearSearch();
+  }
+  const onClearSearch = () => {
     setModel('');
     setColor('');
     setLocation('');
@@ -141,6 +144,8 @@ export const History = (props) => {
                 )
               }
               <div style={{ display: 'flex', marginTop: 12 }}>
+                <Button fullWidth variant="outlined" onClick={onClearSearch}>Clear Search</Button>
+                <div style={{ width: 20 }}/>
                 <Button fullWidth variant="contained" onClick={searchType === 'bike' ? onSearchBike : onSearchUser}>Search</Button>
               </div>
               {
