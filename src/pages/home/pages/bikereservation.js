@@ -6,14 +6,14 @@ import FilterListIcon from '@mui/icons-material/FilterListOutlined';
 import CancelIcon from '@mui/icons-material/CancelOutlined';
 import {
   IconButton, Toolbar, Button, Dialog, DialogActions, Typography, Tooltip,
-  DialogContent, DialogContentText, DialogTitle, Grid, InputAdornment
+  DialogContent, DialogContentText, DialogTitle, Grid, InputAdornment, Rating
 } from '@mui/material';
 import { useAuth } from "../../../context/AuthContext";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { cancelReservation, createReservation, getMyReservations } from "../../../api/reservations";
+import { cancelReservation, createUpdateReservation, getMyReservations } from "../../../api/reservations";
 import moment from 'moment';
 
-const dateFormat = 'DD/MM/yyyy';
+export const dateFormat = 'yyyy/MM/DD';
 export const BikeReservation = () => {
   return (
     <Grid container spacing={2}>
@@ -34,8 +34,8 @@ const MakeReservation = () => {
     location: '',
     rating: ''
   })
-  const [from, setFrom] = useState(moment.now())
-  const [to, setTo] = useState(moment.now())
+  const [from, setFrom] = useState(moment().format(dateFormat))
+  const [to, setTo] = useState(moment().format(dateFormat))
   const onChangeFilter = (obj) => {
     setFilters(data => ({
       ...data,
@@ -49,21 +49,19 @@ const MakeReservation = () => {
     { id: 'color', label: 'Color', align: 'center', minWidth: 100 },
     { id: 'location', label: 'Location', align: 'center', minWidth: 170 },
     { id: 'rating', label: 'Rating', align: 'center', minWidth: 100 },
-    { id: 'available', label: 'Available', align: 'center', minWidth: 100 },
     { id: 'actions', label: 'Actions', align: 'center', minWidth: 100 }
   ];
   const onReserve = async (bikeId, uid, data) => {
-    await createReservation({ bikeId, uid, ...data });
+    await createUpdateReservation({ bikeId, uid, ...data });
   }
   const createRows = (rows) => {
-    return rows.map(each => {
+    return rows.filter(each => each.available).map(each => {
       return {
         id: each.id,
         model: each.model || '',
         color: each.color || '',
         location: each.location || '',
-        rating: each.rating || '',
-        available: each.available ? '✓' : '✕',
+        rating: <Rating value={each.rating || 0} readOnly />,
         actions: <Tooltip title="Reserve">
           <IconButton color="primary" component="span" onClick={() => setReserveDialog(each)}>
             <ReservationIcon />
@@ -73,8 +71,8 @@ const MakeReservation = () => {
     })
   }
   useEffect(() => {
-    getBikesListener({}, data => setRows(createRows(data)));
-  }, []);
+    getBikesListener({ from, to }, data => setRows(createRows(data)));
+  }, [from, to]);
   const filteredRows = rows.filter((each) => {
     const allfilters = [];
     if (filters.model !== '') {
@@ -141,15 +139,15 @@ const MyReservations = () => {
     { id: 'color', label: 'Color', align: 'center', minWidth: 100 },
     { id: 'from', label: 'From', align: 'center', minWidth: 170 },
     { id: 'to', label: 'To', align: 'center', minWidth: 100 },
+    { id: 'rating', label: 'Rating', align: 'center', minWidth: 170 },
     { id: 'actions', label: 'Actions', align: 'center', minWidth: 100 }
   ];
   const onCancel = async (id) => {
-    console.log('====== IDS: ',currentUser.uid, id)
     await cancelReservation(currentUser.uid, id);
   }
   const createRows = (rows) => {
-    console.log('===========', rows)
     return rows.map(each => {
+      console.log('==============', each)
       return {
         id: each.id,
         model: each.model || '',
@@ -157,6 +155,10 @@ const MyReservations = () => {
         to: each.to || '',
         from: each.from || '',
         location: each.location || '',
+        rating: <Rating value={each.rating || 0} onChange={async (event, newValue) => {
+          console.log(each.id, currentUser.uid, newValue.toString());
+          createUpdateReservation({ bikeId: each.id, uid: currentUser.uid, rating: newValue.toString(), to: each.to, from: each.from });
+        }} />,
         actions: <Tooltip title="Reserve">
           <IconButton color="primary" component="span" onClick={() => setCancelDialog(each)}>
             <CancelIcon />

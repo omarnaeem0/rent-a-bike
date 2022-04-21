@@ -18,9 +18,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import HistoryIcon from '@mui/icons-material/History';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import { AccountManager, BikeHistory, BikeManager, BikeReservation, UserHistory } from "./pages";
+import { AccountManager, BikeManager, BikeReservation, History } from "./pages";
 const drawerWidth = 240;
 
 export const Home = (props) => {
@@ -49,15 +48,10 @@ export const Home = (props) => {
           icon: <SupervisorAccountIcon />,
           element: <AccountManager/>
         }, {
-          text: 'Bike History',
-          route: 'bike-history',
+          text: 'History',
+          route: 'history',
           icon: <HistoryIcon />,
-          element: <BikeHistory/>
-        }, {
-          text: 'User History',
-          route: 'user-history',
-          icon: <ManageSearchIcon />,
-          element: <UserHistory/>
+          element: <History/>
         }]
         break;
       default:

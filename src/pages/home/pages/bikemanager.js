@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import {
   IconButton, Toolbar, Button, Dialog, DialogActions, Typography,
-  DialogContent, DialogContentText, DialogTitle, Grid, FormHelperText
+  DialogContent, DialogContentText, DialogTitle, Grid, FormHelperText, Rating
 } from '@mui/material';
 
 export const BikeManager = () => {
@@ -36,6 +36,7 @@ export const BikeManager = () => {
       return {
         ...each,
         available: each.available ? '✓' : '✕',
+        rating: <Rating value={each.rating || 0} readOnly/>,
         actions: <>
           <IconButton color="primary" component="span" onClick={() => setAddEditDialog(each)}>
             <EditIcon />

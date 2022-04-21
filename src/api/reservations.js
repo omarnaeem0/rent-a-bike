@@ -1,6 +1,6 @@
 import { getDatabase, ref, set, push, onValue, update, child, get, remove } from "firebase/database";
 
-export async function createReservation(data) {
+export async function createUpdateReservation(data) {
   const { bikeId, uid, ...rest } = data;
   const db = getDatabase();
   const updates = {};
