@@ -2,6 +2,17 @@ import { getDatabase, ref, set, push, onValue, update, get, child } from "fireba
 import moment from 'moment';
 import { dateFormat } from "../pages/home/pages";
 
+
+export async function getBike(bikeId) {
+  const db = getDatabase();
+  const bikesRef = ref(db);
+  try {
+    return (await get(child(bikesRef, `bikes/${bikeId}`))).val()
+  } catch (e) {
+    throw e
+  }
+}
+
 export async function createBike(data) {
   const db = getDatabase();
   const bikesRef = ref(db, `bikes`);
@@ -56,7 +67,7 @@ export async function getBikes(params, paramException) {
         if (!values[each].deleted) {
           if (paramsMatch(params, values[each])) {
             arr.push({
-              uid: each,
+              id: each,
               ...values[each]
             })
           }

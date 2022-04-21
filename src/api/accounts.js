@@ -1,5 +1,4 @@
-import { isEmpty } from "@firebase/util";
-import { getDatabase, ref, set, query, onValue, update, get, child, equalTo, orderByChild } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, get, child } from "firebase/database";
 
 export async function getAccount(uid) {
   const db = getDatabase();
