@@ -4,7 +4,7 @@ import { getAccount, getAccounts } from "../../../api/accounts";
 import { getBike, getBikes } from "../../../api/bikes";
 import { TableList, TextField, Table } from "../../../components";
 
-export const History = (props) => {
+export const History = () => {
   const [searchType, setSearchType] = useState('');
   const onChangeSearchType = (e) => {
     setSearchType(e.target.value);
@@ -42,7 +42,6 @@ export const History = (props) => {
     { id: 'model', label: 'Model', align: 'center', minWidth: 170 },
     { id: 'color', label: 'Color', align: 'center', minWidth: 100 },
     { id: 'location', label: 'Location', align: 'center', minWidth: 170 },
-    { id: 'rating', label: 'Rating', align: 'center', minWidth: 100 }
   ];
   const onSearchBike = async () => {
     const bikes = await getBikes({ model, color, location }, [])
