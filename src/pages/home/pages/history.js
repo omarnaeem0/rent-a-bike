@@ -1,5 +1,7 @@
 import { Grid, FormControl, InputLabel, Select, MenuItem, Card, CardContent, Accordion, AccordionSummary, AccordionDetails, Button } from "@mui/material";
 import React, { useState } from "react";
+import { getAccounts } from "../../../api/accounts";
+import { getBikes } from "../../../api/bikes";
 import { TableList, TextField } from "../../../components";
 
 export const History = (props) => {
@@ -26,29 +28,31 @@ export const History = (props) => {
     { id: 'location', label: 'Location', align: 'center', minWidth: 170 },
     { id: 'rating', label: 'Rating', align: 'center', minWidth: 100 }
   ];
-  const onSearchBike = () => {
-    console.log('============ onSearchBike')
+  const onSearchBike = async () => {
+    const bikes = await getBikes({ model, color, location }, [])
+    setBikes(bikes);
   }
   const onSelectBike = (data) => {
     console.log('============ onSelectBike: ', data);
   }
-  
+
   // users
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  
+
   const [users, setUsers] = useState([]);
   const usersColumns = [
     { id: 'name', label: 'Name', align: 'center', minWidth: 170 },
     { id: 'email', label: 'Email', align: 'center', minWidth: 170 }
   ];
-  const onSearchUser = () => {
-    console.log('============ onSearchUser')
-    setUsers([{ name: 'User 1', email: 'user1@live.com', id: '123' }])
+  const onSearchUser = async () => {
+    const users = await getAccounts({ name, email, role: 'user' }, ['role'])
+    setUsers(users);
   }
   const onSelectUser = (data) => {
-    console.log('============ onSelectBike: ', data);
+    console.log('============ onSelectUser: ', data);
   }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -136,7 +140,7 @@ export const History = (props) => {
                     </Grid>
                 )
               }
-              <div style={{ display: 'flex', marginTop: 12, marginBottom: 20 }}>
+              <div style={{ display: 'flex', marginTop: 12 }}>
                 <Button fullWidth variant="contained" onClick={searchType === 'bike' ? onSearchBike : onSearchUser}>Search</Button>
               </div>
               {

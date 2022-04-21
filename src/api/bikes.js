@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, push, onValue, update } from "firebase/database";
+import { getDatabase, ref, set, push, onValue, update, get, child } from "firebase/database";
 import moment from 'moment';
 import { dateFormat } from "../pages/home/pages";
 
@@ -29,6 +29,41 @@ export async function deleteBike(id) {
   const bikesRef = ref(db, `bikes/${id}`);
   try {
     return await update(bikesRef, { deleted: true });
+  } catch (e) {
+    throw e
+  }
+}
+
+export async function getBikes(params, paramException) {
+  const db = getDatabase();
+  const usersRef = ref(db);
+  const paramsMatch = (params, item) => {
+    let shouldReturn = true;
+    let allEmpty = true;
+    for (let paramName in params) {
+      if(params[paramName] !== '' && !paramException.includes(paramName)) {
+        allEmpty = false;
+      }
+      shouldReturn = shouldReturn && item[paramName].toString().includes(params[paramName]);
+    }
+    return !allEmpty && shouldReturn;
+  }
+  try {
+    return get(child(usersRef, 'bikes')).then(snapshot => {
+      const arr = [];
+      const values = snapshot.val();
+      for (let each in values) {
+        if (!values[each].deleted) {
+          if (paramsMatch(params, values[each])) {
+            arr.push({
+              uid: each,
+              ...values[each]
+            })
+          }
+        }
+      }
+      return arr
+    });
   } catch (e) {
     throw e
   }

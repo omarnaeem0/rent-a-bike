@@ -1,4 +1,5 @@
-import { getDatabase, ref, set, push, onValue, update, get, child } from "firebase/database";
+import { isEmpty } from "@firebase/util";
+import { getDatabase, ref, set, query, onValue, update, get, child, equalTo, orderByChild } from "firebase/database";
 
 export async function getAccount(uid) {
   const db = getDatabase();
@@ -52,7 +53,42 @@ export async function deleteAccount(uid) {
   }
 }
 
-export async function getAccountsListener(params, callback) {
+export async function getAccounts(params, paramException) {
+  const db = getDatabase();
+  const usersRef = ref(db);
+  const paramsMatch = (params, item) => {
+    let shouldReturn = true;
+    let allEmpty = true;
+    for (let paramName in params) {
+      if(params[paramName] !== '' && !paramException.includes(paramName)) {
+        allEmpty = false;
+      }
+      shouldReturn = shouldReturn && item[paramName].toString().includes(params[paramName]);
+    }
+    return !allEmpty && shouldReturn;
+  }
+  try {
+    return get(child(usersRef, 'users')).then(snapshot => {
+      const arr = [];
+      const values = snapshot.val();
+      for (let each in values) {
+        if (!values[each].deleted) {
+          if (paramsMatch(params, values[each])) {
+            arr.push({
+              uid: each,
+              ...values[each]
+            })
+          }
+        }
+      }
+      return arr
+    });
+  } catch (e) {
+    throw e
+  }
+}
+
+export async function getAccountsListener(callback) {
   const db = getDatabase();
   const usersRef = ref(db, `users`);
   try {

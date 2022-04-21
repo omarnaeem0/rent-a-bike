@@ -13,7 +13,7 @@ export async function createUpdateReservation(data) {
   }
 }
 
-export async function getMyReservations(uid, callback) {
+export async function getUserReservations(uid, callback) {
   const db = getDatabase();
   const userReservationRef = ref(db, `users/${uid}`);
   try {

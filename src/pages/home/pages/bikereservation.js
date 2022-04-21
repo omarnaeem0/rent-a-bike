@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useAuth } from "../../../context/AuthContext";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { cancelReservation, createUpdateReservation, getMyReservations } from "../../../api/reservations";
+import { cancelReservation, createUpdateReservation, getUserReservations } from "../../../api/reservations";
 import moment from 'moment';
 
 export const dateFormat = 'yyyy/MM/DD';
@@ -147,7 +147,6 @@ const MyReservations = () => {
   }
   const createRows = (rows) => {
     return rows.map(each => {
-      console.log('==============', each)
       return {
         id: each.id,
         model: each.model || '',
@@ -156,7 +155,6 @@ const MyReservations = () => {
         from: each.from || '',
         location: each.location || '',
         rating: <Rating value={each.rating || 0} onChange={async (event, newValue) => {
-          console.log(each.id, currentUser.uid, newValue.toString());
           createUpdateReservation({ bikeId: each.id, uid: currentUser.uid, rating: newValue.toString(), to: each.to, from: each.from });
         }} />,
         actions: <Tooltip title="Reserve">
@@ -168,7 +166,7 @@ const MyReservations = () => {
     })
   }
   useEffect(() => {
-    getMyReservations(currentUser.uid, data => setRows(createRows(data)));
+    getUserReservations(currentUser.uid, data => setRows(createRows(data)));
   }, []);
   const toolbar = (
     <>

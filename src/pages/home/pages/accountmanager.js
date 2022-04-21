@@ -42,7 +42,7 @@ export const AccountManager = () => {
     })
   }
   useEffect(() => {
-    getAccountsListener({}, data => setRows(createRows(data)));
+    getAccountsListener(data => setRows(createRows(data)));
   }, []);
   const toolbar = (
     <Toolbar>
