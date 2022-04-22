@@ -14,7 +14,7 @@ export const SignUp = (props) => {
   const { signup, currentUser, error, loading } = useAuth();
   useEffect(() => {
     if (currentUser) {
-      navigate('/manager')
+      navigate('/home')
     }
   }, [currentUser])
   if (loading) {

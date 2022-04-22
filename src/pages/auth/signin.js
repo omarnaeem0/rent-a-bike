@@ -12,7 +12,7 @@ export const SignIn = (props) => {
   const { signin, currentUser, error, loading } = useAuth();
   useEffect(() => {
     if (currentUser) {
-      navigate('/manager')
+      navigate('/home')
     }
   }, [currentUser])
   if (loading) {
