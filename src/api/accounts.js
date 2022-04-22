@@ -54,7 +54,7 @@ export async function deleteAccount(uid) {
 
 export async function getAccounts(params, paramException) {
   const db = getDatabase();
-  const usersRef = ref(db);
+  const dbRef = ref(db);
   const paramsMatch = (params, item) => {
     let shouldReturn = true;
     let allEmpty = true;
@@ -67,7 +67,7 @@ export async function getAccounts(params, paramException) {
     return !allEmpty && shouldReturn;
   }
   try {
-    return get(child(usersRef, 'users')).then(snapshot => {
+    return get(child(dbRef, 'users')).then(snapshot => {
       const arr = [];
       const values = snapshot.val();
       for (let each in values) {
